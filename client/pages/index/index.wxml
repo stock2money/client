@@ -1,0 +1,61 @@
+<!--index.wxml-->
+<view>
+  <view class='page_row'>  
+    <view class="search_bar">  
+      <icon class="search_icon" size='20' type='search'></icon>  
+      <input placeholder="请输入关键字" bindinput='search_input'  value="{{searchValue}}"/>  
+    </view>  
+  </view>
+
+  <view class='page_row'>
+    <view class='box left'>
+      <view class='index_kind'>上证指数</view>
+      <view class='index'>{{SCI}}</view>
+      <view class='page_row'>
+        <view class='var' >{{var_SCI}}</view>
+        <view class='rate'>{{rate_SCI}}%</view>
+      </view>    
+    </view>
+    <view class='box middle'>
+      <view class='index_kind'>恒生指数</view>
+      <view class='index'>{{HSI}}</view>
+      <view class='page_row'>
+        <view class='var' >{{var_HSI}}</view>
+        <view class='rate'>{{rate_HSI}}%</view>
+      </view> 
+    </view>
+    <view class='box right'>
+      <view class='index_kind'>上证指数</view>
+      <view class='index'>{{DJIA}}</view>
+      <view class='page_row'>
+        <view class='var' >{{var_DJIA}}</view>
+        <view class='rate'>{{rate_DJIA}}%</view>
+      </view> 
+    </view>
+
+
+  </view>
+
+  <view class='page_row list_item'>
+    <view class='sixty'> 名称代码 </view>
+    <view class='twenty'> 最新价 </view>
+    <view class='twenty'> 涨跌幅 </view>
+  </view>
+
+  <view class='list_item' wx:for-items="{{stocks_data}}" wx:key="{{item.code}}">
+    <view class='page_row'>
+      <view class='border sixty page_column'>
+        <view class='flex'> {{item.name}} </view>
+        <view> {{item.code}} </view>
+      </view>
+      <view class='flex border twenty'> {{item.price}} </view>
+      <view class='flex border twenty'> {{item.rate > 0 ? '+' : ''}}{{item.rate}}% </view>
+    </view>
+  </view>
+
+</view>
+
+
+
+
+
