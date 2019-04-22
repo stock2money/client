@@ -3,6 +3,7 @@
 const app = getApp()
 
 Page({
+
   data: {
     focus: false,
     searchValue: '',
@@ -55,11 +56,38 @@ Page({
     }]
   },
 
+  onLoad: function (options) {
+    var that = this;
+    wx.request({
+      url: 'https://dataapi.joinquant.com/apis',
+      data: {
+        method: 'get_token',
+        mob: '13690674730',
+        pwd: '123456'
+      },
+      method: "POST",
+      header: {
+        'content-type': "application/json"
+      },
+      success: function (res) {
+        app.globalData.token = res.data,
+        console.log(app.globalData.token);
+        
+        that.load_data();
+      }
+    })
+  },
+
+  load_data:function(){
+    var token = app.globalData.token;
+    console.log('load_data'+token)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
 
   onShow: function () {
+    //console.log(app.globalData.token);
     this.setData({ searchValue: '' })
   },
   
@@ -77,6 +105,7 @@ Page({
 
   //得到股票信息
   get_details:function(e){
+    console.log(app.globalData.token);
     wx.navigateTo({
       url: '/pages/detail/detail?id=my_id',
       success: function (res) { },
