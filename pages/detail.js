@@ -1,4 +1,4 @@
-// pages/collect/collect
+// pages/detail.js
 Page({
 
   /**
@@ -63,5 +63,4 @@ Page({
   onShareAppMessage: function () {
 
   }
-
 })

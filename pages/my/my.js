@@ -9,7 +9,6 @@ Page({
     hasUserInfo: false,
     canIUse: false
   },
-
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -35,7 +34,6 @@ Page({
               console.log('openid为' + openid);
             }
           })
-
         }
       })
 

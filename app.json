@@ -6,6 +6,7 @@
     "pages/info/info",
     "pages/collect/collect",
     "pages/detail/detail"
+
   ],
   "window": {
     "backgroundTextStyle": "light",
