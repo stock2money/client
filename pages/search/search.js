@@ -1,4 +1,4 @@
-// pages/detail.js
+// pages/search/search.js
 Page({
 
   /**
@@ -62,5 +62,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  search_input: function (e) {
+    console.log(e.detail.value)
   }
+
+
 })

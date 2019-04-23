@@ -1,0 +1,7 @@
+<!--pages/search/search.wxml-->
+<view class='page_row'>  
+  <view class="search_bar">  
+    <icon class="search_icon" size='20' type='search'></icon>  
+    <input focus='true' placeholder="请输入关键字" bindinput='search_input'  value="{{searchValue}}"/>  
+  </view>  
+</view>

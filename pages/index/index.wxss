@@ -40,7 +40,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  margin: 5px; 
+  margin: 8px; 
   width: 33%;
   color: #FFFFFF;
 }
@@ -86,7 +86,7 @@
   align-items: center;
 }
 .list_item{
-  margin: 5px;
+  margin: 8px;
 }
 
 .sixty{
@@ -96,5 +96,34 @@
 .twenty{
   width: 20%;
   justify-content: center;
+}
+
+.name{
+  font-size: 15pt;
+}
+
+.code{
+  font-size: 10pt;
+}
+.font_red{
+  color: red;
+  font-size: 13pt;
+}
+.font_orange{
+  color: orange;
+  font-size: 13pt;
+}
+.font_white{
+  color: white;
+}
+.bg_orange{
+  background: orange;
+  width: 100%;
+  font-size: 13pt;
+}
+.bg_red{
+  background: red;
+  width: 100%;
+  font-size: 13pt;
 }
 
