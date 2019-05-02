@@ -23,33 +23,33 @@ Page({
       price: 391.800,
       rate: -0.51
     }, {
-      code: '00700',
+      code: '1110700',
       name: '腾讯控股',
       price: 391.800,
       rate: 0.51
 
     }, {
-      code: '00700',
+      code: '05700',
       name: '腾讯控股',
       price: 391.800,
       rate: 0.51
     }, {
-      code: '00700',
+      code: '01700',
       name: '腾讯控股',
       price: 391.800,
       rate: -0.51
     }, {
-      code: '00700',
+      code: '00330',
       name: '腾讯控股',
       price: 391.800,
       rate: -0.51
     }, {
-      code: '00700',
+      code: '00701',
       name: '腾讯控股',
       price: 391.800,
       rate: -0.51
     }, {
-      code: '00700',
+      code: '00702',
       name: '金山软件',
       price: 391.800,
       rate: 0.51
@@ -105,9 +105,10 @@ Page({
 
   //得到股票信息
   get_details:function(e){
-    console.log(app.globalData.token);
+    //console.log(app.globalData.token);
+    console.log(e)
     wx.navigateTo({
-      url: '/pages/detail/detail?id=my_id',
+      url: '/pages/detail/detail?id='+e.currentTarget.id,
       success: function (res) { },
       fail: function(res) {},
       complete: function(res) {},

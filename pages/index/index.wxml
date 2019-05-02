@@ -45,7 +45,7 @@
     <view class='twenty'> 涨跌幅 </view>
   </view>
 
-  <view bindtap='get_details' class='list_item' wx:for-items="{{stocks_data}}" wx:key="{{item.code}}">
+  <view bindtap='get_details' class='list_item' wx:for-items="{{stocks_data}}" wx:key="{{item.code}}" id="{{item.code}}">
     <view class='page_row'>
       <view class=' sixty page_column'>
         <view class='flex name'> {{item.name}} </view>
