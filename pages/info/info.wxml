@@ -1,2 +1,8 @@
 <!--pages/info/info.wxml-->
-<text>pages/info/info.wxml</text>
+<view wx:for="{{news}}" wx:key="info" class="post-container">
+  <view class="post-author-date">
+    <text class="post-date">{{item.date}}</text>
+  </view>
+  <text class="post-title">{{item.title}}</text>
+  <text class="post-content">{{item.content}}</text>
+</view>

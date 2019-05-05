@@ -5,14 +5,34 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    news: [{
+      date: 'foo',
+      content: 'sddd',
+      title: 'ffff'
+    }, {
+        date: 'foo',
+        content: 'sddd',
+        title: 'ffff'
+    }]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    var that = this
+    wx.request({
+      url: 'http://qcloud.captainp.cn:5000/api/news',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log(res)
+        // that.setData({
+        //   news: res.data,
+        // })
+      }
+    })
   },
 
   /**

@@ -47,7 +47,7 @@ Page({
           hasUserInfo: true
         })
       }
-
+*/
       wx.login({
         success: function (res) {
           var code = res.code;
@@ -55,39 +55,13 @@ Page({
           var secret = '133e74afeca06c60a597cf3b694a6c87'
           var secret = ''
           console.log(code);
-          wx.request({
-            url: 'https://api.weixin.qq.com/sns/jscode2session?appid=' + appId + '&secret=' + secret + '&js_code=' + code + '&grant_type=authorization_code',
-            data: {},
-            header: {
-              'content-type': 'json'
-            },
-            success: function (res) {
-              var openid = res.data.openid //返回openid
-              console.log('openid为' + openid);
-            }
-          })
-
         }
       })
-    } else {
-      // 在没有 open-type=getUserInfo 版本的兼容处理
-      wx.getUserInfo({
-        success: res => {
-          app.globalData.userInfo = res.userInfo
-          this.setData({
-            userInfo: res.userInfo,
-            hasUserInfo: true
-          })
-        }
-      })
-    }
-
-    */
-
   },
   getUserInfo: function (e) {
     //console.log(e)
     //app.globalData.userInfo = e.detail.userInfo
+    console.log(app.globalData.userInfo)
     this.setData({
       userInfo: app.globalData.userInfo,
       hasUserInfo: true
