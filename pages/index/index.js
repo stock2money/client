@@ -87,7 +87,8 @@ Page({
    */
 
   onShow: function () {
-    //console.log(app.globalData.token);
+    // console.log(app.globalData.token);
+    console.log("onShow")
     this.setData({ searchValue: '' })
   },
   

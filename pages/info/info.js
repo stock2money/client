@@ -5,15 +5,23 @@ Page({
    * 页面的初始数据
    */
   data: {
-    news: [{
-      date: 'foo',
-      content: 'sddd',
-      title: 'ffff'
-    }, {
-        date: 'foo',
-        content: 'sddd',
-        title: 'ffff'
-    }]
+    news: []
+  },
+
+  /**
+   * 收缩核心代码
+   */
+  kindToggle(e) {
+    const title = e.currentTarget.id
+    console.log(title)
+    const news = this.data.news
+    for (let i = 0, len = news.length; i < len; ++i) {
+      if (news[i].title === title) {
+        news[i].open = !news[i].open
+      } else {
+        news[i].open = false
+      }
+    }
   },
 
   /**
@@ -22,15 +30,18 @@ Page({
   onLoad: function (options) {
     var that = this
     wx.request({
-      url: 'http://qcloud.captainp.cn:5000/api/news',
+      url: 'https://qcloud.captainp.cn/api/news',
       headers: {
         'Content-Type': 'application/json'
       },
       success: function (res) {
         console.log(res)
-        // that.setData({
-        //   news: res.data,
-        // })
+        for (let i = 0, len = res.data.length; i < len; ++i) {
+            res.data[i].open = false
+        } 
+        that.setData({
+          news: res.data,
+        })
       }
     })
   },
@@ -46,7 +57,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    console.log("show")
   },
 
   /**

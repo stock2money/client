@@ -1,8 +1,11 @@
 <!--pages/info/info.wxml-->
-<view wx:for="{{news}}" wx:key="info" class="post-container">
-  <view class="post-author-date">
-    <text class="post-date">{{item.date}}</text>
+<block wx:for-items="{{news}}" wx:key="{{item.title}}">
+  <view class="kind-list-item">
+    <view id="{{item.title}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle">
+      <view class="kind-list-text">{{item.title}}</view>
+    </view>
+    <view class="content {{item.open ? 'ellipsis':'unellipsis'}}">
+      <view class="navigator-text">{{item.detail}}</view>
+    </view>
   </view>
-  <text class="post-title">{{item.title}}</text>
-  <text class="post-content">{{item.content}}</text>
-</view>
+</block>
