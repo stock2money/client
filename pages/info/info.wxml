@@ -1,2 +1,16 @@
 <!--pages/info/info.wxml-->
-<text>pages/info/info.wxml</text>
+<!--<text>pages/info/info.wxml</text>-->
+  <!-- <view class="headLine box box-tb" > -->
+    <view class="headLineWra box box-lr" wx:for="{{news}}" bindtap="jumpDetails" id="{{index}}"  wx:key="{{item}}">
+      <view class="headLineContent box box-tb box-align-center box-pack-around">
+        <view class="headLineTitle">
+          {{item.title}}
+        </view>
+        <view class="headLineInfor box box-lr box-pack-between">
+          <view class="headLineSource">
+            日期: {{item.time}}
+          </view>
+        </view>
+      </view>
+    </view>
+  <!-- </view> -->
