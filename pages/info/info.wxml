@@ -1,11 +1,16 @@
 <!--pages/info/info.wxml-->
-<block wx:for-items="{{news}}" wx:key="{{item.title}}">
-  <view class="kind-list-item">
-    <view id="{{item.title}}" class="kind-list-item-hd {{item.open ? 'kind-list-item-hd-show' : ''}}" bindtap="kindToggle">
-      <view class="kind-list-text">{{item.title}}</view>
+<!--<text>pages/info/info.wxml</text>-->
+  <!-- <view class="headLine box box-tb" > -->
+    <view class="headLineWra box box-lr" wx:for="{{news}}" bindtap="jumpDetails" id="{{index}}"  wx:key="{{item}}">
+      <view class="headLineContent box box-tb box-align-center box-pack-around">
+        <view class="headLineTitle">
+          {{item.title}}
+        </view>
+        <view class="headLineInfor box box-lr box-pack-between">
+          <view class="headLineSource">
+            日期: {{item.time}}
+          </view>
+        </view>
+      </view>
     </view>
-    <view class="content {{item.open ? 'ellipsis':'unellipsis'}}">
-      <view class="navigator-text">{{item.detail}}</view>
-    </view>
-  </view>
-</block>
+  <!-- </view> -->

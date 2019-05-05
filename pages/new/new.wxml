@@ -1,0 +1,15 @@
+<!--pages/new/new.wxml-->
+<view>
+  <view class='top-text'>
+  </view>
+  <view>
+    <view class='content-text'>
+      <text>{{title}}</text>
+      <text class='type-date'>发布时间：{{time}}</text>
+    </view>
+    <view class="divLine"></view>
+    <view>
+      <text class='type-detail'>{{detail}}</text>
+    </view>
+  </view>
+</view>

@@ -5,8 +5,8 @@
     "pages/my/my",
     "pages/info/info",
     "pages/collect/collect",
-    "pages/detail/detail"
-
+    "pages/detail/detail",
+    "pages/new/new"
   ],
   "window": {
     "backgroundTextStyle": "light",
