@@ -2,18 +2,46 @@
 App({
   globalData: {
     userInfo: null,
-    token: null
+    token: null,
+    openid : null,
+    all_stocks: '000001.XSHE,PAYH,平安银行,stock\n000002.XSHE, WKA, 万科A, stock\n'
+
   },
   onLaunch: function () {
+    console.log(this.globalData.all_stocks.split('\n'))
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
+    var that = this
     // 登录
     wx.login({
       success: res => {
-        console.log(res.code)
+        console.log('get code from wechat' + res.code)
+        var that = this
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        wx.request({
+          url: 'https://qcloud.captainp.cn/api/login',
+          data: {
+            code: res.code
+          },
+          method: "POST",
+          header: {
+            'content-type': "application/json"
+          },
+          success: function (res) {
+            //app.globalData.token = res.data,
+            console.log(res.data);
+            that.globalData.token = res.data.token;
+            that.globalData.openid = res.data.openid;
+            
+            if(that.indexCallback){
+              that.indexCallback(res.data.token);
+            }
+            
+          }
+        })
+        
       }
     })
     // 获取用户信息

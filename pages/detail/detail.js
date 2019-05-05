@@ -4,6 +4,7 @@ const app = getApp()
 var storage = require('../../utils/storage');
 var kl = require('../../utils/KLineView/k-line');
 
+// 设置第一幅图选项
 var getOptionKline1 = function (type) {
   return {
     name: type || 'dk',
@@ -36,6 +37,7 @@ var getOptionKline1 = function (type) {
     }
   };
 };
+//设置第二幅图选项
 var getOptionKline2 = function (type) {
   return {
     name: type || 'dk',
@@ -78,7 +80,26 @@ Page({
    * 页面的初始数据
    */
   data: {
-    canvasIndex : 0
+    "code": null,
+    "currentPeriodIndex": 1,
+    "unit":null,
+    "type": null,
+    "dataset": {
+      "info":{
+        "price":'',
+        "deta":'',
+        "rate":'',
+        "open": '',
+        "close": '',
+        "volume": '',
+        "high": '',
+        "low": '',
+        "volumn": '',
+        "money": ''
+      },
+      "data":null
+    
+    }
 
   },
 
@@ -86,22 +107,36 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.setNavigationBarTitle({
+      title: options['name'],
+      size: 15
+    })
+    this.data.type = 'dk'
+    this.data.unit = '1d'
+    this.code = options['id']
     console.log('id'+options['id'])
-    console.log('token' + app.globalData.token)
-    var token = app.globalData.token
+    this.getBasic()
+    this.getData()
+
+  },
+  onShow: function(){
+    console.log('onShow detail')
+  },
+
+  getBasic: function () {
+
+    var token = app.globalData.token;
     //请求数据
-    var param = {
-      method: 'get_price',
-      token: token
-    }
-    wx.request({ 
+    var that = this;
+
+    wx.request({
       url: 'https://dataapi.joinquant.com/apis',
       data: {
         method: 'get_price',
         token: token,
-        code: '600000.XSHG',
-        count: 100,
-        unit: '1d',       
+        code: that.code,
+        count: 2,
+        unit: '1d',
       },
       method: "POST",
       header: {
@@ -109,54 +144,76 @@ Page({
       },
       success: function (res) {
         //console.log(res.data)
-        
-        var data = res.data.split('\n')
-
-       //console.log(data.length)
-        for(var i = 1; i < data.length; i++){
-            //console.log(data[i])
-          var arr = data[i].split(',')
-          for(var j = 0; j < arr.length; j++){
-            //console.log(arr[j]);
-          }
-        }
-        
+        //第一行不要
+      
+        var d = res.data.split('\n').slice(1)
+        that.data.dataset.data = d;
+        var info = d[d.length - 1].split(',')
+        var close = d[0].split(',')[2];
+        var deta = info[2]-close;
+        var rate = deta/close*100
+        that.setData({
+          'dataset.info.open': info[1],
+          'dataset.info.close': close,
+          'dataset.info.rate': rate.toFixed(2),
+          'dataset.info.deta': deta.toFixed(2),
+          'dataset.info.price': info[2],
+          'dataset.info.high': info[3],
+          'dataset.info.low': info[4],
+          'dataset.info.volume': (info[5] / (10 ** 8)).toFixed(2),
+          'dataset.info.money': (info[6] / (10 ** 8)).toFixed(2)
+        })
       }
     })
-
-    //day
-    this.tabChart({
-      target: {
-        dataset: {
-          type: 'dk'
-        }
-      }
-    });
-
   },
 
+  getData: function(){
+    
+    var token = app.globalData.token;
+    //请求数据
+    var that = this;
+
+    wx.request({
+      url: 'https://dataapi.joinquant.com/apis',
+      data: {
+        method: 'get_price',
+        token: token,
+        code: that.code,
+        count: 100,
+        unit: that.data.unit,
+      },
+      method: "POST",
+      header: {
+        'content-type': "application/json"
+      },
+      success: function (res) {
+        //console.log(res.data)
+        //第一行不要
+        var d = res.data.split('\n').slice(1)
+        that.data.dataset.data = d;
+        //console.log(that.data.dataset)
+        //console.log(data.length)
+        //console.log(that.data.type)
+        that.tabChart({
+          target: {
+            dataset: {
+              type: that.data.type
+            }
+          }
+        });
+
+      }
+    })
+  },
+
+  /**
+   * 设置类型
+   */
   tabChart: function (e) {
     var type = e.target.dataset.type;
-    var getDataByType = function (type) {
-      return {
-        'dk': function () {
-          return storage.getDkData();
-        },
-        'wk': function () {
-          return storage.getWkData();
-        },
-        'mk': function () {
-          return storage.getMkData();
-        }
-      }[type]();
-    };
-    var data = getDataByType(type);
-    console.log(data)
-    var d = {"data":data.data,"v":1}
-    
-    console.log(d)
-    console.log(type)
-    
+    //var data = getDataByType(type);
+
+    var d = this.data.dataset  
     this.draw(d, type);
   },
 
@@ -224,40 +281,40 @@ Page({
   选择k线类型
   */
   onPeriodSelectorClick: function (e) {
-    let index = e.currentTarget.dataset.index
-    let period = 1
-    var canvasIndex = 0
-
+    var index = e.currentTarget.dataset.index
+    //console.log(index)
+    var type = null
+    var unit = null
     switch (index) {
       case "0":
-        period = 1;
-        canvasIndex = 0
+        type = 'hk';
+        unit = '60m';
         break;
       case "1":
-        period = 100;
-        canvasIndex = 1
+        type = "dk";
+        unit = "1d";
         break;
       case "2":
-        period = 101;
-        canvasIndex = 2
+        type = "wk";
+        unit = "1w";
         break;
       case "3":
-        period = 102;
-        canvasIndex = 3
+        type = "mk";
+        unit = "1M";
         break;
       case "4":
-        period = 60;
-        canvasIndex = 4
+        type = "mink";
+        unit = "30m";
         break;
     }
 
     this.setData({
+      type: type,
       currentPeriodIndex: index,
-      quotePeriod: period,
-      quoteData: {
-        canvasIndex: canvasIndex
-      }
+      unit: unit
     })
+
+    this.getData()
 
   },
 })

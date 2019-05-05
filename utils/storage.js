@@ -1,6 +1,5 @@
 /**
- * Created by ChenChao on 2017/1/16.
- * demo 用的数据
+ * test所用的数据
  */
 
 module.exports = {

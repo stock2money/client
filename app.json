@@ -6,7 +6,6 @@
     "pages/info/info",
     "pages/collect/collect",
     "pages/detail/detail"
-
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,5 +42,6 @@
         "selectedIconPath": "pages/picture/icon/my.png"
       }
     ]
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }

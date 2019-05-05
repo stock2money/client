@@ -11,7 +11,7 @@
     width: 280rpx;
     height: 80rpx;
     position: absolute;
-    font-size: 52rpx;
+    font-size: 60rpx;
     text-align: center;
     line-height: 80rpx;
 }
@@ -92,12 +92,12 @@
 
 #section_quotation .quota_colum4 {
     position: absolute;
-    left: 372rpx;
+    left: 380rpx;
 }
 
 #section_quotation .quota_colum5 {
     position: absolute;
-    left: 554rpx;
+    left: 540rpx;
 }
 
 #section_quotation .quota_colum6 {
