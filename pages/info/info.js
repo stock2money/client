@@ -5,6 +5,8 @@ Page({
   * 页面的初始数据
   */
   data: {
+    from: 0,
+    to: 20,
     news: []
   },
  
@@ -17,7 +19,7 @@ Page({
       title: '加载中',
     })
     wx.request({
-      url: 'https://qcloud.captainp.cn/api/news',
+      url: 'https://qcloud.captainp.cn/api/news?from=' + this.data.from + '&to=' + this.data.to,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -25,7 +27,7 @@ Page({
         console.log(res)
         wx.hideLoading()
         that.setData({
-          news: res.data.reverse(),
+          news: res.data["data"],
         })
       }
     })
@@ -81,15 +83,57 @@ Page({
   /**
   * 页面相关事件处理函数--监听用户下拉动作
   */
-  onPullDownRefresh: function () {   
-    
+  // 下拉刷新
+  onPullDownRefresh: function () {
+    // 显示顶部刷新图标
+    wx.showNavigationBarLoading();
+    var that = this;
+    wx.request({
+      url: 'https://qcloud.captainp.cn/api/news?from=0&to=20',
+      method: "GET",
+      header: {
+        'content-type': 'application/text'
+      },
+      success: function (res) {
+        that.setData({
+          news: res.data["data"],
+        });
+        console.log(res);
+        // 隐藏导航栏加载框
+        wx.hideNavigationBarLoading();
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+      }
+    })
   },
   
   /**
-  * 页面上拉触底事件的处理函数
-  */
+     * 页面上拉触底事件的处理函数
+     */
   onReachBottom: function () {
-    
+    var that = this;
+    // 显示加载图标
+    wx.showLoading({
+      title: '玩命加载中',
+    })
+    wx.request({
+      url: 'https://qcloud.captainp.cn/api/news?from=' + this.data.to + '&to=' + (this.data.to + 100)
+,
+      method: "GET",
+      // 请求头部
+      header: {
+        'content-type': 'application/text'
+      },
+      success: function (res) {
+        // 设置数据
+        that.setData({
+          news: that.data.news.concat(res.data["data"])
+        })
+        // 隐藏加载框
+        wx.hideLoading();
+      }
+    })
+
   },
 
   /**
@@ -98,20 +142,4 @@ Page({
   onShareAppMessage: function () {
 
   },
-  
- 
-
-  /**
-  * 页面上拉触底事件的处理函数
-  */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-  * 页面相关事件处理函数--监听用户下拉动作
-  */
-  onPullDownRefresh: function () {
-    
-  }
 })
