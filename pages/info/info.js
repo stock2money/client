@@ -117,7 +117,7 @@ Page({
       title: '玩命加载中',
     })
     wx.request({
-      url: 'https://qcloud.captainp.cn/api/news?from=' + this.data.to + '&to=' + (this.data.to + 100)
+      url: 'https://qcloud.captainp.cn/api/news?from=' + this.data.to + '&to=' + (this.data.to + 10)
 ,
       method: "GET",
       // 请求头部
