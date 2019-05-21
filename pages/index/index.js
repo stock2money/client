@@ -24,7 +24,7 @@ Page({
   onLoad: function (options) {
     console.log('onLoad index')
     var that = this;
-    
+  
     /*
     wx.request({
       url: 'https://dataapi.joinquant.com/apis',
@@ -72,9 +72,13 @@ Page({
 
   onReady: function () {
     console.log('onReady')
+    
   },
 
   onShow: function () {
+    // console.log(app.globalData.token);
+    console.log("onShow")
+
     this.setData({ searchValue: '' })
     console.log('onshow index')
     this.startTimer();
