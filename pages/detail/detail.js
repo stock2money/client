@@ -99,8 +99,10 @@ Page({
       },
       "data":null
     
-    }
-
+    },
+    "pick_btn": null,
+    "if_pick": null,
+    "pick_str": ''
   },
 
   /**
@@ -118,9 +120,8 @@ Page({
     this.getBasic()
     this.getData()
 
-  },
-  onShow: function(){
-    console.log('onShow detail')
+
+
   },
 
   getBasic: function () {
@@ -128,6 +129,7 @@ Page({
     var token = app.globalData.token;
     //请求数据
     var that = this;
+    
 
     wx.request({
       url: 'https://dataapi.joinquant.com/apis',
@@ -172,7 +174,7 @@ Page({
     var token = app.globalData.token;
     //请求数据
     var that = this;
-
+    
     wx.request({
       url: 'https://dataapi.joinquant.com/apis',
       data: {
@@ -237,23 +239,62 @@ Page({
 
   /**
    * 生命周期函数--监听页面显示
+   * 
    */
   onShow: function () {
+    //请求自选股信息
+    var that = this;
 
+
+    if(app.globalData.collected){
+      this.check_selected()
+    }else{
+      wx.request({
+        url: 'https://qcloud.captainp.cn/api/stocks/' + app.globalData.openid,
+        success: function (res) {
+          console.log('---------------')
+          console.log(res.data.stocks);
+          app.globalData.collected = res.data.stocks;
+          that.check_selected()
+        }
+      })
+    }
+    
+
+  },
+
+  check_selected: function(){
+    var stocks = app.globalData.collected;
+    this.if_pick = false;
+    for (var i = 0; i < stocks.length; i++) {
+      if (stocks[i] == this.code) {
+        this.if_pick = true;
+        break;
+      }
+    }
+
+    var str = this.if_pick ? '-选' : '+选';
+    this.setData({
+      'pick_str': str
+    })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
+   * 
    */
   onHide: function () {
-
+    console.log('onHide')
+    
   },
 
   /**
    * 生命周期函数--监听页面卸载
+   * 只有页面隐藏起来的时候，才向后端发起收藏或者取消收藏的操作
    */
   onUnload: function () {
-
+    console.log('detail onUnload')
+    
   },
 
   /**
@@ -317,6 +358,35 @@ Page({
     this.getData()
 
   },
+  
+  pick_stock: function(e){
+    
+    
+    var that = this;
+    var pick_url = 'https://qcloud.captainp.cn/api/stocks/' + (that.if_pick ? 'remove' : 'add');
+    wx.request({
+      url: pick_url,
+      data: {
+        userId: app.globalData.openid,
+        stockCode: that.code
+      },
+      method: "POST",
+      header: {
+        'content-type': "application/json"
+      },
+      success: function (res) {
+        //app.globalData.token = res.data,
+        console.log(res.data);
+        app.globalData.collected = res.data.collected
+        that.if_pick = !that.if_pick;
+        var str = that.if_pick ? '-选' : '+选'
+        that.setData({
+          pick_str: str
+        })
+      }
+    })
+
+  }
 })
 
 

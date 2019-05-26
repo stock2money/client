@@ -64,15 +64,11 @@ Page({
         console.log('get token successfully ' +token);
         this.load_data()
       }    
-    }
-
-    
-    
+    }    
   },
 
   onReady: function () {
     console.log('onReady')
-    
   },
 
   onShow: function () {

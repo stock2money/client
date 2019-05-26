@@ -4,11 +4,11 @@ App({
     userInfo: null,
     token: null,
     openid : null,
-    all_stocks: '000001.XSHE,PAYH,平安银行,stock\n000002.XSHE, WKA, 万科A, stock\n'
-
+    //all_stocks: '000001.XSHE,PAYH,平安银行,stock\n000002.XSHE, WKA, 万科A, stock\n'
+    collected: null
   },
   onLaunch: function () {
-    console.log(this.globalData.all_stocks.split('\n'))
+
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

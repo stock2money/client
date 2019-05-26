@@ -45,3 +45,4 @@
 
 <canvas canvas-id="k-line-b" class="stage" style="width: 100%; height: 80px;">
 </canvas>
+<button class="float_btn" bindtap="pick_stock">{{pick_str}}</button>

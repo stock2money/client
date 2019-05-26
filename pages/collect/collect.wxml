@@ -1,2 +1,60 @@
 <!--pages/collect/collect.wxml-->
-<text>pages/collect/collect.wxml</text>
+<view>
+  <view class='page_row'>
+    <view class='box left' bindtap='SCI_detail'>
+
+      <view class='index_kind'>上证指数</view>
+      <view class='index'>{{SCI}}</view>
+      <view class='page_row'>
+        <view class='var' >{{var_SCI}}</view>
+        <view class='rate'>{{rate_SCI}}%</view>
+      </view>    
+    </view>
+    <view class='box middle' bindtap='HSI_detail'>
+      <view class='index_kind'>深证成指</view>
+      <view class='index'>{{SHE}}</view>
+      <view class='page_row'>
+        <view class='var' >{{var_SHE}}</view>
+        <view class='rate'>{{rate_SHE}}%</view>
+      </view> 
+    </view>
+
+    <view class='box right' bindtap='GEM_detail'>
+      <view class='index_kind'>创业板指</view>
+      <view class='index'>{{GEM}}</view>
+      <view class='page_row'>
+        <view class='var' >{{var_GEM}}</view>
+        <view class='rate'>{{rate_GEM}}%</view>
+      </view> 
+    </view>
+
+
+  </view>
+
+  <view class='page_row list_item'>
+    <view class='sixty'> 名称代码 </view>
+    <view class='twenty'> 最新价 </view>
+    <view class='twenty'> 涨跌幅 </view>
+  </view>
+
+  <view bindtap='get_details' data-name="{{item.name}}" class='list_item' wx:for-items="{{stocks_data}}" wx:key="{{item.code}}" id="{{item.code}}">
+    <view class='page_row'>
+      <view class=' sixty page_column'>
+        <view class='flex name'> {{item.name}}({{item.en}}) </view>
+        <view class='code'> {{item.c}} </view>
+      </view>
+      <view class='flex  twenty {{item.rate>0?"font_red":"font_orange"}}'> {{item.price}} </view>
+      <view class='flex twenty'>
+      
+      <view class='flex twenty font_white {{item.rate>0?"bg_red":"bg_orange"}}'> {{item.rate > 0 ? '+' : ''}}{{item.rate}}% </view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+
+
+
+
+

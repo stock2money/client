@@ -256,3 +256,15 @@
     height: 100%;
 }
 
+.float_btn{
+    width:60px; 
+    height: 60px;
+    font-size: 18px;
+    border-radius: 30px;
+    position: absolute;
+    bottom: 90rpx;
+    right: 60rpx;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
