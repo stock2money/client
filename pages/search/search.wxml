@@ -7,16 +7,13 @@
   
 </view>
 
+<view class="hide" hidden="{{if_find}}">找不到相关股票</view>
+
 <view bindtap='get_details' data-name="{{item.name}}" class='list_item' wx:for-items="{{stocks_data}}" wx:key="{{item.code}}" id="{{item.code}}">
     <view class='page_row'>
       <view class=' sixty page_column'>
         <view class='flex name'> {{item.name}}({{item.en}}) </view>
         <view class='code'> {{item.c}} </view>
-      </view>
-      <view class='flex  twenty {{item.rate>0?"font_red":"font_orange"}}'> {{item.price}} </view>
-      <view class='flex twenty'>
-      
-      <view class='flex twenty font_white {{item.rate>0?"bg_red":"bg_orange"}}'> {{item.rate > 0 ? '+' : ''}}{{item.rate}}% </view>
       </view>
     </view>
   </view>

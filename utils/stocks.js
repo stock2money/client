@@ -1,12 +1,39 @@
 module.exports = {
   get_all_stocks: get_all_stocks,
   get_some_stocks: get_some_stocks,
-  get_name: get_name
+  get_name: get_name,
+  search: search
 }
 var arr = null
 function get_all_stocks() {
   var tmp = stocks
   return tmp
+}
+var stocks_arr = null
+function get_arr(){
+  if(stocks_arr == null){
+    stocks_arr = []
+    var s = stocks.split('\n')
+    for(var i = 0; i < s.length; i++){
+      stocks_arr.push(s[i].split(','))
+    }
+  }
+}
+  
+
+function search(key){
+  get_arr()
+  var arr = []
+  for (var i = 0; i < stocks_arr.length; i++){
+    for (var j = 0; j < stocks_arr[0].length; j++){
+      if (stocks_arr[i][j].search(key) != -1){
+        arr.push(stocks_arr[i])
+        break
+      }
+    }
+  }  
+  return arr
+
 }
 
 function get_some_stocks(i) {

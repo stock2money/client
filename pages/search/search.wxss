@@ -26,3 +26,34 @@
   height: 20px;  
   text-align: center;  
 }  
+
+.page_row{
+  display: flex;
+  flex-direction: row
+}
+.sixty{
+  width: 60%;
+}
+.page_column{
+  display: flex;
+  flex-direction: column;
+}
+.flex{
+  display: flex;
+  align-items: center;
+}
+.name{
+  font-size: 15pt;
+}
+
+.code{
+  font-size: 10pt;
+}
+.list_item{
+  margin: 18px;
+}
+.hide{
+  margin-top: 5px;
+  width: 100%;
+  text-align: center;
+}

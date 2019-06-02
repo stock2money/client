@@ -47,11 +47,11 @@
 </canvas>
 <view hidden="{{!if_pick}}" class="float_btn">
   <icon size = '30' type = 'success' color = "LightGrey" bindtap="pick_stock"> </icon>
-  <view style="margin-left:5px" > 取消收藏</view>
+  <view style="margin-left:5px" > 添加收藏</view>
 </view>
 <view hidden="{{if_pick}}" class="float_btn">
   <icon size = '30' type = 'success' bindtap="pick_stock"> </icon>
-  <view style="margin-left:5px"> 添加自选</view>
+  <view style="margin-left:5px"> 取消自选</view>
 </view>
 
 
