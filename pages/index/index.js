@@ -89,12 +89,57 @@ Page({
   startTimer: function () {
     var that = this;
     //3秒更新一次
-    var interval = 3 * 1000;
+    var interval =5 * 1000;
     intervalId = setInterval(function () {
-      //that.load_data();
-      console.log('update');
+      that.update_data()
     }, interval);
 
+  },
+
+  update_data: function(){
+    console.log('update');
+    //console.log(this.data.stocks_data)
+    var len = this.data.stocks_data.length
+    var that = this
+    for (var i = 0; i < len; i++) {
+      var code = (that.data.stocks_data[i]).code;
+      (function (i) {
+        wx.request({
+          url: 'https://dataapi.joinquant.com/apis',
+          data: {
+            method: 'get_price',
+            token: app.globalData.token,
+            code: code,
+            unit: '1d',
+            count: 3
+          },
+          method: "POST",
+          header: {
+            'content-type': "application/json"
+          },
+          success: function (res) {
+            //第一行不要
+            var d = res.data.split('\n').slice(1)
+            var info = d[d.length - 1].split(',')
+            var close = d[d.length - 2].split(',')[2];
+            var price = info[2]
+            var deta = price - close;
+            var rate = deta / close * 100
+
+            let stocks_data = that.data.stocks_data;
+            stocks_data[i].rate = rate.toFixed(2)
+            stocks_data[i].price = price
+            if(stocks_data[i].price != price){
+              console.log('change')
+            }
+            that.setData({
+              stocks_data
+            })
+          }
+        })
+      })(i);
+    
+    }
   },
 
   //停止计时
@@ -130,6 +175,8 @@ Page({
     var that = this
     var some_stocks = stocks.get_some_stocks(num)
     console.log(some_stocks)
+    num += some_stocks.length
+    console.log('num='+num)
     var name_arr = []
     var code_arr = []
     var en_arr = []
@@ -321,6 +368,151 @@ Page({
       fail: function (res) { },
       complete: function (res) { },
     })
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    return {
+      title: '看上哪只股票了，快来围观吧',
+      path: '/pages/index/index',
+
+      success: function () {
+        console.info('分享成功');
+        // 转发成功
+      },
+      fail: function (res) {
+        console.log(res + '失败');
+        // 转发失败
+      },
+      complete: function (res) {
+        // 不管成功失败都会执行
+      }
+    }
+  },
+
+  onPullDownRefresh: function () {
+    // 显示顶部刷新图标
+    console.log('onPullDownRefresh')
+
+    let stocks_data = this.data.stocks_data;
+    stocks_data = stocks_data.slice(0, 20)
+    this.setData({
+      stocks_data
+    })
+    wx.showNavigationBarLoading();
+    num = 20
+    var len = this.data.stocks_data.length
+    console.log('len'+len)
+    var that = this
+    for (var i = 0; i < len; i++) {
+      var code = (that.data.stocks_data[i]).code;
+      (function (i) {
+        wx.request({
+          url: 'https://dataapi.joinquant.com/apis',
+          data: {
+            method: 'get_price',
+            token: app.globalData.token,
+            code: code,
+            unit: '1d',
+            count: 3
+          },
+          method: "POST",
+          header: {
+            'content-type': "application/json"
+          },
+          success: function (res) {
+            //第一行不要
+            var d = res.data.split('\n').slice(1)
+            var info = d[d.length - 1].split(',')
+            var close = d[d.length - 2].split(',')[2];
+            var price = info[2]
+            var deta = price - close;
+            var rate = deta / close * 100
+
+            let stocks_data = that.data.stocks_data;
+            stocks_data[i].rate = rate.toFixed(2)
+            stocks_data[i].price = price
+            if (stocks_data[i].price != price) {
+              console.log('change')
+            }
+            that.setData({
+              stocks_data
+            })
+            wx.hideNavigationBarLoading();
+            // 停止下拉动作
+            wx.stopPullDownRefresh();
+          }
+        })
+      })(i);
+
+    }
+  },
+
+  onReachBottom: function () {
+    var that = this;
+    // 显示加载图标
+    var that = this
+    var some_stocks = stocks.get_some_stocks(num)
+    
+    console.log(some_stocks)
+    num += some_stocks.length
+    console.log('num=' + num)
+    var name_arr = []
+    var code_arr = []
+    var en_arr = []
+    for (var i = 0; i < some_stocks.length; i++) {
+      var info = some_stocks[i].split(',')
+      var code = info[0]
+      var name = info[1]
+      var en = info[2]
+      name_arr.push(name);
+      code_arr.push(code);
+      en_arr.push(en);
+      (function (i) {
+        wx.request({
+          url: 'https://dataapi.joinquant.com/apis',
+          data: {
+            method: 'get_price',
+            token: app.globalData.token,
+            code: code,
+            unit: '1d',
+            count: 3
+          },
+          method: "POST",
+          header: {
+            'content-type': "application/json"
+          },
+          success: function (res) {
+            console.log(res.data)
+            //第一行不要
+            var d = res.data.split('\n').slice(1)
+            var info = d[d.length - 1].split(',')
+            var close = d[d.length - 2].split(',')[2];
+            var price = info[2]
+            var deta = price - close;
+            var rate = deta / close * 100
+
+            var obj = new Object()
+            obj.c = code_arr[i].split('.')[0]
+            obj.code = code_arr[i]
+            obj.name = name_arr[i]
+            obj.en = en_arr[i]
+            obj.price = price
+            obj.rate = rate.toFixed(2)
+            let stocks_data = that.data.stocks_data;
+            console.log(stocks_data)
+            stocks_data.push(obj)
+            that.setData({
+              stocks_data
+            })
+          }
+        })
+      })(i);
+      console.log(info)
+    }
+
   },
   
 })

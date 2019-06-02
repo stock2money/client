@@ -11,6 +11,12 @@ Page({
     canIUse: false
   },
   onLoad: function () {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true
+      })
+    }
     /*
     if (app.globalData.userInfo) {
       this.setData({
@@ -48,7 +54,7 @@ Page({
           hasUserInfo: true
         })
       }
-*/
+
       wx.login({
         success: function (res) {
           var code = res.code;
@@ -57,7 +63,7 @@ Page({
           var secret = ''
           console.log(code);
         }
-      })
+      })*/
   },
   getUserInfo: function (e) {
     //console.log(e)
@@ -67,6 +73,11 @@ Page({
       userInfo: app.globalData.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+  onPullDownRefresh: function () {
+    console.log('onPull')
+
+    wx.stopPullDownRefresh();
+  },
 })
 

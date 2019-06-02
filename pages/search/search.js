@@ -5,7 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    stocks_data: [{
+      "code":"123"
+    }]
   },
 
   /**
@@ -66,6 +68,7 @@ Page({
 
   search_input: function (e) {
     console.log(e.detail.value)
+    
   }
 
 

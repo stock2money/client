@@ -116,12 +116,23 @@ Page({
     this.data.type = 'dk'
     this.data.unit = '1d'
     this.code = options['id']
+    this.name = options['name']
     console.log('id'+options['id'])
-    this.getBasic()
-    this.getData()
 
+    if (app.globalData.token && app.globalData.token != '') {
+      //token准备好了
+      this.getBasic()
+      this.getData()
 
+    } else {
+      //还没有token，等待回调
+      app.indexCallback = token => {
+        console.log('get token successfully ' + token);
+        this.getBasic()
+        this.getData()
 
+      }
+    }  
   },
 
   getBasic: function () {
@@ -274,8 +285,10 @@ Page({
     }
 
     var str = this.if_pick ? '-选' : '+选';
+    var that = this
     this.setData({
-      'pick_str': str
+      'pick_str': str,
+      'if_pick': that.if_pick
     })
   },
 
@@ -302,6 +315,7 @@ Page({
    */
   onPullDownRefresh: function () {
 
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -315,7 +329,22 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    return {
+      title: '我看上了这只股，快来围观吧',
+      path: '/pages/detail/detail?id='+this.code+'&name='+this.name,
 
+      success: function () {
+        console.info('分享成功');
+        // 转发成功
+      },
+      fail: function (res) {
+        console.log(res + '失败');
+        // 转发失败
+      },
+      complete: function (res) {
+        // 不管成功失败都会执行
+      }
+    }
   },
 
   /*
@@ -381,7 +410,8 @@ Page({
         that.if_pick = !that.if_pick;
         var str = that.if_pick ? '-选' : '+选'
         that.setData({
-          pick_str: str
+          pick_str: str,
+          if_pick : that.if_pick
         })
       }
     })

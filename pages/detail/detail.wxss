@@ -14,6 +14,7 @@
     font-size: 60rpx;
     text-align: center;
     line-height: 80rpx;
+    
 }
 
 .quota_zdf {
@@ -257,14 +258,14 @@
 }
 
 .float_btn{
-    width:60px; 
-    height: 60px;
+    width:100%; 
     font-size: 18px;
-    border-radius: 30px;
+    background: AliceBlue;
     position: absolute;
-    bottom: 90rpx;
-    right: 60rpx;
+    bottom: 0rpx;
+
     align-items: center;
     display: flex;
     justify-content: center;
 }
+

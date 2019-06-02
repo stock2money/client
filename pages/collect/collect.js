@@ -1,9 +1,10 @@
 // pages/collect/collect
 const app = getApp()
 var stocks = require('../../utils/stocks');
+
 var num = 0;
 Page({
-
+  "enablePullDownRefresh": true,
   /**
    * 页面的初始数据
    */
@@ -76,7 +77,9 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    console.log('onPull')
 
+    wx.stopPullDownRefresh();
   },
 
   /**

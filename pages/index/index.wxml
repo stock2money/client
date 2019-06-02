@@ -2,7 +2,7 @@
 <view>
   <view class='page_row'>  
     <view class="search_bar">  
-      <icon class="search_icon" size='20' type='search'></icon>  
+      <icon class="search_icon" size='20' type='success_circle'></icon>  
       <input placeholder="请输入关键字" bindinput='search_input' bindtap='go_search'  value="{{searchValue}}"/>  
 
     </view>  
