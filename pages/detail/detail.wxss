@@ -263,7 +263,7 @@
     background: AliceBlue;
     position: absolute;
     bottom: 0rpx;
-
+    padding-bottom: 5px;
     align-items: center;
     display: flex;
     justify-content: center;

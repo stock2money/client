@@ -89,7 +89,7 @@ Page({
   startTimer: function () {
     var that = this;
     //3秒更新一次
-    var interval =5 * 1000;
+    var interval =60 * 1000;
     intervalId = setInterval(function () {
       that.update_data()
     }, interval);

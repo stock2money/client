@@ -3,8 +3,12 @@
 const app = getApp()
 var storage = require('../../utils/storage');
 var kl = require('../../utils/KLineView/k-line');
+var ts = require('../../utils/KLineView/time-sharing');
 
-// 设置第一幅图选项
+
+var kLine, kLineB;
+var ts1, ts2;
+// 设置第一幅k线图选项
 var getOptionKline1 = function (type) {
   return {
     name: type || 'dk',
@@ -37,7 +41,7 @@ var getOptionKline1 = function (type) {
     }
   };
 };
-//设置第二幅图选项
+//设置第二幅k线图选项
 var getOptionKline2 = function (type) {
   return {
     name: type || 'dk',
@@ -72,7 +76,88 @@ var getOptionKline2 = function (type) {
   };
 };
 
-var kLine, kLineB;
+var getOptionTimeSharing1 = function (type, width) {
+  return {
+    name: type || 'time-sharing',
+    width: width || 'auto',
+    height: 200,
+    axis: {
+      row: 4,
+      col: 4,
+      paddingTop: 0,
+      paddingBottom: 0,
+      paddingLeft: 0,
+      paddingRight: 0,
+      color: '#cdcdcd'
+    },
+    xAxis: {
+      data: []
+    },
+    yAxis: [
+      {
+        type: 'line',
+        lineColor: '#2F6098',
+        background: 'rgba(53,125,222,0.1)',
+        /*background: function () {  //渐变背景在IOS上会影响均线颜色，这个应该是小程序canvas的bug
+            return ['rgba(53,125,222,0.3)', 'rgba(0,0,0,0)'];
+        },*/
+        data: []
+      },
+      {
+        type: 'line',
+        lineColor: '#A96F3E',
+        data: []
+      }
+    ],
+    callback: function (time) {
+      var page = getCurrentPages();
+      page = page[page.length - 1];
+      page.setData({
+        ts1RenderTime: time
+      });
+    }
+  };
+};
+var getOptionTimeSharing2 = function (type, width) {
+  return {
+    name: type || 'time-sharing-b',
+    width: width || 'auto',
+    height: 80,
+    axis: {
+      row: 2,
+      col: 4,
+      showEdg: true,
+      showX: true,
+      showY: true,
+      paddingTop: 5,
+      paddingBottom: 14,
+      paddingLeft: 0,
+      paddingRight: 0,
+      color: '#cdcdcd'
+    },
+    xAxis: {
+      times: ['09:30', '15:00'],
+      data: []
+    },
+    yAxis: [
+      {
+        type: 'bar',
+        color: [],
+        data: [],
+        showMax: true
+      }
+    ],
+    callback: function (time) {
+      var page = getCurrentPages();
+      page = page[page.length - 1];
+      page.setData({
+        ts2RenderTime: time
+      });
+    }
+  };
+};
+
+
 
 Page({
 
@@ -192,7 +277,7 @@ Page({
         method: 'get_price',
         token: token,
         code: that.code,
-        count: 100,
+        count: 250,
         unit: that.data.unit,
       },
       method: "POST",
@@ -204,7 +289,7 @@ Page({
         //第一行不要
         var d = res.data.split('\n').slice(1)
         that.data.dataset.data = d;
-        //console.log(that.data.dataset)
+        console.log(that.data.dataset)
         //console.log(data.length)
         //console.log(that.data.type)
         that.tabChart({
@@ -231,13 +316,23 @@ Page({
   },
 
   draw: function (data, type) {
-    kLine = kl('k-line').init(getOptionKline1(type));
-    kLine.metaData1(data, getOptionKline1(type));
-    kLine.draw();
+    //if(type != 'ts'){
+      kLine = kl('k-line').init(getOptionKline1(type));
+      kLine.metaData1(data, getOptionKline1(type));
+      kLine.draw();
 
-    kLineB = kl('k-line-b').init(getOptionKline2(type));
-    kLineB.metaData2(data, getOptionKline2(type));
-    kLineB.draw();
+      kLineB = kl('k-line-b').init(getOptionKline2(type));
+      kLineB.metaData2(data, getOptionKline2(type));
+      kLineB.draw();
+    /*}else{
+      ts1 = ts('k-line').init(getOptionTimeSharing1());
+      ts1.metaData1(data, getOptionTimeSharing1());
+      ts1.draw();
+      ts2 = ts('k-line-b').init(getOptionTimeSharing2());
+      ts2.metaData2(data, getOptionTimeSharing2());
+      ts2.draw();
+    }*/
+    
   },
 
 
@@ -373,7 +468,7 @@ Page({
         unit = "1M";
         break;
       case "4":
-        type = "mink";
+        type = "mink-30";
         unit = "30m";
         break;
     }

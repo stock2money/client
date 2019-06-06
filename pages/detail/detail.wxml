@@ -3,7 +3,7 @@
 <view id="section_quotation">
 
   <!-- 价格、涨跌、涨跌幅 -->
-  <view class="quota_price" style="color:'blue'">{{dataset.info.price}}</view>
+  <view class="quota_price" style="color:'black'">{{dataset.info.price}}</view>
   <view class="quota_zd" style="color:{{dataset.info.rate>0?'red':'orange'}};">{{dataset.info.deta}}</view>
   <view class="quota_zdf" style="color:{{dataset.info.rate>0?'red':'orange'}};">{{dataset.info.rate}}%</view>
 
@@ -45,15 +45,15 @@
 
 <canvas canvas-id="k-line-b" class="stage" style="width: 100%; height: 80px;">
 </canvas>
-<view hidden="{{!if_pick}}" class="float_btn">
+
+<view hidden="{{if_pick}}" class="float_btn">
   <icon size = '30' type = 'success' color = "LightGrey" bindtap="pick_stock"> </icon>
   <view style="margin-left:5px" > 添加收藏</view>
 </view>
-<view hidden="{{if_pick}}" class="float_btn">
+<view hidden="{{!if_pick}}" class="float_btn">
   <icon size = '30' type = 'success' bindtap="pick_stock"> </icon>
   <view style="margin-left:5px"> 取消自选</view>
 </view>
-
 
 
 

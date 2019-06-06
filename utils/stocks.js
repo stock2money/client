@@ -24,12 +24,17 @@ function get_arr(){
 function search(key){
   get_arr()
   var arr = []
+  var num = 0
   for (var i = 0; i < stocks_arr.length; i++){
     for (var j = 0; j < stocks_arr[0].length; j++){
       if (stocks_arr[i][j].search(key) != -1){
         arr.push(stocks_arr[i])
+        num += 1
         break
       }
+    }
+    if(num >= 50){
+      break;
     }
   }  
   return arr
