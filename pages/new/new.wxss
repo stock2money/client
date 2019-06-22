@@ -2,10 +2,11 @@
   height: 1300rpx;
 }
 .top-text{
-  font-size: 24rpx;
-  color: #999;
-  margin-left: 20rpx;
+  font-size: 40rpx;
+  margin-left: 40rpx;
   margin-right: 20rpx;
+  
+  font-weight: bold;
 }
 
 .divLine{
@@ -61,4 +62,10 @@
 .type-date{
   display: block;
   font-size: 30rpx;
+  margin-left: 20rpx;
+}
+.text-content {
+  margin-left: 7%;
+  width: 85%;
+
 }

@@ -1,14 +1,14 @@
 <!--pages/new/new.wxml-->
 <view>
   <view class='top-text'>
+      <text>{{title}}</text>
   </view>
   <view>
     <view class='content-text'>
-      <text>{{title}}</text>
       <text class='type-date'>发布时间：{{time}}</text>
     </view>
     <view class="divLine"></view>
-    <view>
+    <view class="text-content">
       <text class='type-detail'>{{detail}}</text>
     </view>
   </view>

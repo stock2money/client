@@ -15,10 +15,18 @@ Page({
    */
   onLoad: function (options) {
     let object = JSON.parse(options.object)
+    var tempStr = object.detail
+    var i = 0
+    for(i=0; i<tempStr.length; i++) {
+      if(tempStr.charAt(i) == '@') {
+        tempStr = tempStr.slice(0, i)+'\n'+tempStr.slice(i+1)
+      }
+    }
+    console.log(tempStr)
     this.setData({
       time: object.time,
       title: object.title,
-      detail: object.detail
+      detail: tempStr
     })
   },  
 
