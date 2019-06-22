@@ -36,6 +36,7 @@ Page({
   // 资讯
   jumpDetails: function (e) {
     let index = e.currentTarget.id
+    console.log(this.data.news[index])
     wx.navigateTo({
       url: '/pages/new/new?object=' + JSON.stringify(this.data.news[index]),
       success: function(res) {

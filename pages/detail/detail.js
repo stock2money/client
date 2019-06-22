@@ -187,7 +187,13 @@ Page({
     },
     "pick_btn": null,
     "if_pick": null,
-    "pick_str": ''
+    "pick_str": '',
+    comments:[{
+        avatar: 'https://wx.qlogo.cn/mmopen/vi_32/7KbDZ2Y8Nc2eNj2Tygjd9Ly7wwuQrVe5LeeQCeRvOJBo26glLAAe64nEJHDibfDjladvG8LHMl7nHLrcoZVMaicA/132',
+        author: '长虹鉴',
+        detail: 'good'
+    }]
+    
   },
 
   /**
@@ -208,14 +214,14 @@ Page({
       //token准备好了
       this.getBasic()
       this.getData()
-
+      this.getComment()
     } else {
       //还没有token，等待回调
       app.indexCallback = token => {
         console.log('get token successfully ' + token);
         this.getBasic()
         this.getData()
-
+        this.getComment()
       }
     }  
   },
@@ -303,6 +309,23 @@ Page({
       }
     })
   },
+  getComment:function(e){
+    console.log("getComment")
+    console.log(app.globalData.userInfo)
+    var that = this
+    wx.request({
+      url: 'https://qcloud.captainp.cn/api/stock/'+that.code+'/comment',
+  
+      method: "GET",
+      header: {
+        'content-type': "application/json"
+      },
+      success: function (res) {
+        console.log(res)
+       
+      }
+    })
+  },
 
   /**
    * 设置类型
@@ -365,7 +388,7 @@ Page({
         }
       })
     }
-    
+    this.get_comment()
 
   },
 
@@ -483,9 +506,7 @@ Page({
 
   },
   
-  pick_stock: function(e){
-    
-    
+  pick_stock: function(e){ 
     var that = this;
     var pick_url = 'https://qcloud.captainp.cn/api/stocks/' + (that.if_pick ? 'remove' : 'add');
     wx.request({
@@ -511,6 +532,47 @@ Page({
       }
     })
 
+  },
+  get_comment:function(){
+    console.log('get_comment')
+    var that = this
+    wx.request({
+      url: 'https://qcloud.captainp.cn/api/stock/' + this.code + '/comment',
+
+      method: "GET",
+      header: {
+        'content-type': "application/json"
+      },
+      success: function (res) {
+        //app.globalData.token = res.data,
+        console.log(res.data);
+        var comments = []
+        var c = res.data.data
+        for(var i = 0; i < c.length; i++){
+          var obj = {}
+          obj.avatar = c[i].avatar
+          obj.author = c[i].author
+          var detail = c[i].detail
+          detail = detail.replace(/\s+/g,'')
+          detail = detail.replace(/@/g, '\n')
+          detail = detail.replace(/&/g, '\n')
+          console.log(detail)
+          obj.detail = detail
+          comments.push(obj)
+
+        }
+        that.setData({
+          'comments' : comments
+        })
+      }
+    })
+  },
+
+  write_comment:function(){
+    console.log(this.code)
+    wx.navigateTo({
+      url: '/pages/comment/comment?code=' + this.code+'&name='+this.name
+    })
   }
 })
 

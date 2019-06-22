@@ -3,13 +3,13 @@
   <view class='top-text'>
   </view>
   <view>
-    <view class='content-text'>
+    <view style='margin: 5%' class='content-text'>
       <text>{{title}}</text>
       <text class='type-date'>发布时间：{{time}}</text>
     </view>
-    <view class="divLine"></view>
-    <view>
-      <text class='type-detail'>{{detail}}</text>
+    <view class="divLine" style='margin: 10px'></view>
+    <view style='margin: 5%; font-size: 30px'>
+      <text decode="{{true}}" class='type-detail'>{{detail}}</text>
     </view>
   </view>
 </view>

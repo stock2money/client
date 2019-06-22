@@ -1,0 +1,6 @@
+<!--pages/comment/comment.wxml-->
+
+<form bindsubmit="submit_comment">
+    <textarea placeholder="谈谈你的看法" style='width: 96%;margin:2%;border:1px solid black' name="content" />
+    <button formType="submit">留言</button>
+</form>

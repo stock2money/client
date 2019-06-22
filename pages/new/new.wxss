@@ -47,18 +47,20 @@
   margin-top: 20rpx;
 }
 .type-text{
-  margin-left: 10rpx;
-  font-size: 30rpx;
+  margin: 10rpx;
+  font-size: 40rpx;
 }
 .url-text{
-  margin-left: 10rpx;
+  margin: 10rpx;
   font-size: 24rpx;
 }
 .type-detail{
   margin-left: 10rpx;
-  font-size: 30rpx;
+  font-size: 40rpx;
+
 }
 .type-date{
   display: block;
   font-size: 30rpx;
+  margin: 5%;
 }

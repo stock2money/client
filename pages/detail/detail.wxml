@@ -55,6 +55,25 @@
   <view style="margin-left:5px"> 取消自选</view>
 </view>
 
+<view class='page_row'style='padding:10px' >
+<view style='width:50%;margin-left:10%;text-align:left;'> 评论 </view>
+<view style='width:50%;margin-right:10%;text-align:right;' bindtap='write_comment'> 写留言 </view>
+</view>
+
+<view style='width:100%;text-align:center' hidden='{{comments.length != 0}}'> 暂时还没有评论喔 </view>
 
 
-<view style="text-align: center"> 媒体评论（待实现）</view>
+
+<view class='list_item' wx:for-items="{{comments}}" wx:key="{{item}}">
+    <view class='page_row ' style='margin: 10px'>
+      <image class="userinfo-avatar" src="{{item.avatar? item.avatar : '/pages/picture/avatar.jpg'}}" mode="cover"></image>
+      <view class='sixty page_column'>
+        <view class='flex name'style='margin-top: 8px;font-size=30px'> {{item.author}} </view>
+        <view class='flex name' style='margin-top: 5px'> {{item.detail}} </view>
+      </view>
+      
+    </view>
+</view>
+
+<view style='height:30px'> </view>
+

@@ -15,10 +15,15 @@ Page({
    */
   onLoad: function (options) {
     let object = JSON.parse(options.object)
+    var detail = object.detail
+    detail = detail.replace(/\+/g,'')
+    detail = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+detail
+    detail = detail.replace(/@/g,'\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;')
+    console.log(detail)
     this.setData({
       time: object.time,
       title: object.title,
-      detail: object.detail
+      detail: detail
     })
   },  
 

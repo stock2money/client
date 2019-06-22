@@ -6,7 +6,8 @@
     "pages/info/info",
     "pages/collect/collect",
     "pages/detail/detail",
-    "pages/new/new"
+    "pages/new/new",
+    "pages/comment/comment"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -14,7 +15,6 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
     "enablePullDownRefresh": true,
-  
     "backgroundColor": "#E0FFFF"
   },
   "tabBar": {
